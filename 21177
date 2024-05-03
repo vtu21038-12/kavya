@@ -1,0 +1,194 @@
+import numpy as np
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn import svm
+from sklearn.metrics import accuracy_score
+# loading the diabetes dataset to a pandas DataFrame
+diabetes_dataset = pd.read_csv('/content/diabetes.csv') 
+# printing the first 5 rows of the dataset
+diabetes_dataset.head()
+# number of rows and Columns in this dataset
+diabetes_dataset.shape
+# getting the statistical measures of the data
+diabetes_dataset.describe()
+diabetes_dataset['Outcome'].value_counts()
+diabetes_dataset.groupby('Outcome').mean()
+# separating the data and labels
+X = diabetes_dataset.drop(columns = 'Outcome', axis=1)
+Y = diabetes_dataset['Outcome']
+print(Y)
+X_train, X_test, Y_train, Y_test = train_test_split(X,Y, test_size = 0.2, stratify=Y, random_state=2)
+print(X.shape, X_train.shape, X_test.shape)
+classifier = svm.SVC(kernel='linear')
+#training the support vector Machine Classifier
+classifier.fit(X_train, Y_train)
+# accuracy score on the training data
+X_train_prediction = classifier.predict(X_train)
+training_data_accuracy = accuracy_score(X_train_prediction, Y_train)
+print('Accuracy score of the training data : ', training_data_accuracy)
+# accuracy score on the test data
+X_test_prediction = classifier.predict(X_test)
+test_data_accuracy = accuracy_score(X_test_prediction, Y_test)
+input_data = (5,166,72,19,175,25.8,0.587,51)
+
+# changing the input_data to numpy array
+input_data_as_numpy_array = np.asarray(input_data)
+
+# reshape the array as we are predicting for one instance
+input_data_reshaped = input_data_as_numpy_array.reshape(1,-1)
+
+prediction = classifier.predict(input_data_reshaped)
+print(prediction)
+
+if (prediction[0] == 0):
+  print('The person is not diabetic')
+else:
+  print('The person is diabetic')
+  import pickle
+  filename = 'diabetes_model.sav'
+pickle.dump(classifier, open(filename, 'wb'))
+# loading the saved model
+loaded_model = pickle.load(open('diabetes_model.sav', 'rb'))
+input_data = (5,166,72,19,175,25.8,0.587,51)
+
+# changing the input_data to numpy array
+input_data_as_numpy_array = np.asarray(input_data)
+
+# reshape the array as we are predicting for one instance
+input_data_reshaped = input_data_as_numpy_array.reshape(1,-1)
+
+prediction = loaded_model.predict(input_data_reshaped)
+print(prediction)
+
+if (prediction[0] == 0):
+  print('The person is not diabetic')
+else:
+  print('The person is diabetic')
+  for column in X.columns:
+  print(column)
+
+HEART :
+import numpy as np
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import accuracy_score
+# loading the csv data to a Pandas DataFrame
+heart_data = pd.read_csv('/content/heart.csv')
+# print first 5 rows of the dataset
+heart_data.head()
+# print last 5 rows of the dataset
+heart_data.tail()
+# number of rows and columns in the dataset
+heart_data.shape
+# getting some info about the data
+heart_data.info()
+# checking for missing values
+heart_data.isnull().sum()
+# statistical measures about the data
+heart_data.describe()
+# checking the distribution of Target Variable
+heart_data['target'].value_counts()
+X = heart_data.drop(columns='target', axis=1)
+Y = heart_data['target']
+print(X)
+print(Y)
+X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2, stratify=Y, random_state=2)
+print(X.shape, X_train.shape, X_test.shape)
+model = LogisticRegression()
+# training the LogisticRegression model with Training data
+model.fit(X_train, Y_train)
+# accuracy on training data
+X_train_prediction = model.predict(X_train)
+training_data_accuracy = accuracy_score(X_train_prediction, Y_train)
+print('Accuracy on Training data : ', training_data_accuracy)
+# accuracy on test data
+X_test_prediction = model.predict(X_test)
+test_data_accuracy = accuracy_score(X_test_prediction, Y_test)
+print('Accuracy on Test data : ', test_data_accuracy)
+input_data = (62,0,0,140,268,0,0,160,0,3.6,0,2,2)
+
+# change the input data to a numpy array
+input_data_as_numpy_array= np.asarray(input_data)
+
+# reshape the numpy array as we are predicting for only on instance
+input_data_reshaped = input_data_as_numpy_array.reshape(1,-1)
+
+prediction = model.predict(input_data_reshaped)
+print(prediction)
+
+if (prediction[0]== 0):
+  print('The Person does not have a Heart Disease')
+else:
+  print('The Person has Heart Disease')
+  import pickle
+  filename = 'heart_disease_model.sav'
+pickle.dump(model, open(filename, 'wb'))
+# loading the saved model
+loaded_model = pickle.load(open('heart_disease_model.sav', 'rb'))
+for column in X.columns:
+  print(column)
+
+  PARKINSON'S:
+  import numpy as np
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn import svm
+from sklearn.metrics import accuracy_score
+# loading the data from csv file to a Pandas DataFrame
+parkinsons_data = pd.read_csv('/content/parkinsons.csv')
+# printing the first 5 rows of the dataframe
+parkinsons_data.head()
+# number of rows and columns in the dataframe
+parkinsons_data.shape
+# getting more information about the dataset
+parkinsons_data.info()
+# checking for missing values in each column
+parkinsons_data.isnull().sum()
+# getting some statistical measures about the data
+parkinsons_data.describe()
+# distribution of target Variable
+parkinsons_data['status'].value_counts()
+# grouping the data bas3ed on the target variable
+parkinsons_data.groupby('status').mean()
+X = parkinsons_data.drop(columns=['name','status'], axis=1)
+Y = parkinsons_data['status']
+print(X)
+print(y)
+X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2, random_state=2)
+print(X.shape, X_train.shape, X_test.shape)
+model = svm.SVC(kernel='linear')
+# training the SVM model with training data
+model.fit(X_train, Y_train)
+# accuracy score on training data
+X_train_prediction = model.predict(X_train)
+training_data_accuracy = accuracy_score(Y_train, X_train_prediction)
+print('Accuracy score of training data : ', training_data_accuracy)
+# accuracy score on training data
+X_test_prediction = model.predict(X_test)
+test_data_accuracy = accuracy_score(Y_test, X_test_prediction)
+print('Accuracy score of test data : ', test_data_accuracy)
+input_data = (197.07600,206.89600,192.05500,0.00289,0.00001,0.00166,0.00168,0.00498,0.01098,0.09700,0.00563,0.00680,0.00802,0.01689,0.00339,26.77500,0.422229,0.741367,-7.348300,0.177551,1.743867,0.085569)
+
+# changing input data to a numpy array
+input_data_as_numpy_array = np.asarray(input_data)
+
+# reshape the numpy array
+input_data_reshaped = input_data_as_numpy_array.reshape(1,-1)
+
+prediction = model.predict(input_data_reshaped)
+print(prediction)
+
+
+if (prediction[0] == 0):
+  print("The Person does not have Parkinsons Disease")
+
+else:
+  print("The Person has Parkinsons")
+import pickle
+filename = 'parkinsons_model.sav'
+pickle.dump(model, open(filename, 'wb'))
+# loading the saved model
+loaded_model = pickle.load(open('parkinsons_model.sav', 'rb'))
+for column in X.columns:
+  print(column)
